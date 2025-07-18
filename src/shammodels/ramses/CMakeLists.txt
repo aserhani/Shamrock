@@ -28,6 +28,7 @@ set(Sources
     src/modules/ComputeCFL.cpp
     src/modules/ConsToPrimGas.cpp
     src/modules/ConsToPrimDust.cpp
+    src/modules/PrimToConsGas.cpp
     src/modules/ComputeCellAABB.cpp
     src/modules/StencilGenerator.cpp
     src/modules/NodeBuildTrees.cpp
