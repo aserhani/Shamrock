@@ -7,7 +7,7 @@ import shamrock
 outputdir = ""
 
 # simulation parameters
-tmax = 0.1
+tmax = 1
 dt_dump = 0.01
 C_cour = 0.08
 C_force = 0.08
@@ -19,7 +19,7 @@ bmin = 0.0
 bmax = 1.0
 
 # grid parameters
-base = 8  # resol = base * 2
+base = 32  # resol = base * 2
 multx = 1
 multy = 1
 multz = 1
@@ -117,8 +117,8 @@ else:
 ################## SIMULATION ####################
 t = 0
 while t <= tmax:
-    # model.dump_vtk(outputdir + "sedov_" + f"{idump:04}" + ".vtk")
-    model.dump(outputdir + "sedov_" + f"{idump:04}" + ".sham")
+    model.dump_vtk(outputdir + "sedov_" + f"{idump:04}" + ".vtk")
+    # model.dump(outputdir + "sedov_" + f"{idump:04}" + ".sham")
     model.evolve_until(t)
     t += dt_dump
     idump += 1

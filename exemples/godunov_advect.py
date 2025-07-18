@@ -24,7 +24,7 @@ def run_sim(vanleer=True, label="none"):
     cfg = model.gen_default_config()
     scale_fact = 1 / (sz * base * multx)
     cfg.set_scale_factor(scale_fact)
-    cfg.set_eos_gamma(1.0)
+    cfg.set_eos_gamma(1.00001)
     model.set_solver_config(cfg)
 
     model.init_scheduler(int(1e7), 1)
@@ -59,7 +59,7 @@ def run_sim(vanleer=True, label="none"):
     model.set_field_value_lambda_f64_3("rhovel", rhovel_map)
 
     # model.evolve_once(0,0.1)
-    freq = 16
+    freq = 4
     t = 0
 
     dt = 1 / 256
