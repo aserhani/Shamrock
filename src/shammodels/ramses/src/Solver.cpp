@@ -30,6 +30,7 @@
 #include "shammodels/ramses/modules/ComputeTimeDerivative.hpp"
 #include "shammodels/ramses/modules/ConsToPrimDust.hpp"
 #include "shammodels/ramses/modules/ConsToPrimGas.hpp"
+#include "shammodels/ramses/modules/PrimToConsGas.hpp"
 #include "shammodels/ramses/modules/DragIntegrator.hpp"
 #include "shammodels/ramses/modules/FindBlockNeigh.hpp"
 #include "shammodels/ramses/modules/GhostZones.hpp"
@@ -470,6 +471,27 @@ void shammodels::basegodunov::Solver<Tvec, TgridVec>::init_solver_graph() {
 
         shamrock::solvergraph::OperationSequence seq(
             "Cons to Prim", std::move(const_to_prim_sequence));
+        solver_sequence.push_back(std::make_shared<decltype(seq)>(std::move(seq)));
+    }
+    
+    { // Build PrimToCons node
+        std::vector<std::shared_ptr<shamrock::solvergraph::INode>> prim_to_cons_sequence;
+
+        {
+            modules::NodePrimToConsGas<Tvec> node{AMRBlock::block_size, solver_config.eos_gamma};
+            node.set_edges(
+                storage.block_counts_with_ghost,
+                storage.vel,
+                storage.press,
+                storage.refs_rho,
+                storage.refs_rhov,
+                storage.refs_rhoe);
+
+            prim_to_cons_sequence.push_back(std::make_shared<decltype(node)>(std::move(node)));
+        }
+
+        shamrock::solvergraph::OperationSequence seq(
+            "Prim to Cons", std::move(prim_to_cons_sequence));
         solver_sequence.push_back(std::make_shared<decltype(seq)>(std::move(seq)));
     }
 
