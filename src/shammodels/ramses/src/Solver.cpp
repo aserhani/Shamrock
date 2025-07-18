@@ -875,7 +875,7 @@ void shammodels::basegodunov::Solver<Tvec, TgridVec>::init_solver_graph() {
     shamrock::solvergraph::OperationSequence seq("Solver", std::move(solver_sequence));
     storage.solver_sequence = std::make_shared<decltype(seq)>(std::move(seq));
 
-    if (false) {
+    if (true) {
         logger::raw_ln(" -- tex:\n" + shambase::get_check_ref(storage.solver_sequence).get_tex());
         logger::raw_ln(
             " -- dot:\n" + shambase::get_check_ref(storage.solver_sequence).get_dot_graph());
@@ -936,10 +936,10 @@ void shammodels::basegodunov::Solver<Tvec, TgridVec>::evolve_once() {
 
     // compute prim variable
     {
-        // logger::raw_ln(" -- tex:\n" +
-        // shambase::get_check_ref(storage.solver_sequence).get_tex());
-        // logger::raw_ln(
-        //   " -- dot:\n" + shambase::get_check_ref(storage.solver_sequence).get_dot_graph());
+        logger::raw_ln(" -- tex:\n" +
+        shambase::get_check_ref(storage.solver_sequence).get_tex());
+        logger::raw_ln(
+          " -- dot:\n" + shambase::get_check_ref(storage.solver_sequence).get_dot_graph());
         shambase::get_check_ref(storage.solver_sequence).evaluate();
     }
 
